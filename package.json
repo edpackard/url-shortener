@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "jest",
+    "test": "cross-env DISABLE_MOCKED_WARNING=true jest",
     "lint": "eslint ./src --ext .ts"
   },
   "keywords": [],
@@ -17,9 +17,11 @@
     "@types/jest": "^27.4.0",
     "@types/mongoose": "^5.11.97",
     "@types/shortid": "^0.0.29",
+    "@types/supertest": "^2.0.11",
     "@types/validator": "^13.7.1",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
     "jest": "^27.4.7",
     "nodemon": "^2.0.15",
