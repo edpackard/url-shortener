@@ -65,6 +65,26 @@ describe('ShortenerController', () => {
       expect(jsonFn).toHaveBeenCalledWith({ message: 'shortId is not provided' });
       expect(redirectFn).not.toHaveBeenCalled();
     })
+
+    it('should redirect to destination url when it exists in db', async () => {
+      UrlModelMock.findOne.mockResolvedValue(urlRecord);
+      await Controller.redirectUrl(request, response);
+      expect(UrlModelMock.findOne).toHaveBeenCalledWith({ shortId });
+      expect(statusFn).not.toHaveBeenCalled();
+      expect(jsonFn).not.toHaveBeenCalled();
+      expect(redirectFn).toHaveBeenCalledWith(urlRecord.url);
+    })
+
+
+    // it('should respond with status 400 when url is invalid', async () => {
+    //   ValidatorMock.isURL.mockReturnValue(false);
+
+    //   await Controller.shortenUrl(request, response);
+    //   expect(ValidatorMock.isURL).toHaveBeenCalledWith(body.url, expect.any(Object));
+    //   expect(statusFn).toHaveBeenCalledWith(400);
+    //   expect(jsonFn).toHaveBeenCalledWith({ message: 'url is invalid'})
+    // })
   })
+
 
 })
