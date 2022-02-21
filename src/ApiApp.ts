@@ -30,7 +30,6 @@ class ApiApp {
     });
 
     // set up router later
-
   }
 }
 
