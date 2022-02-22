@@ -39,23 +39,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var dotenv_1 = __importDefault(require("dotenv"));
-var mongoose_1 = __importDefault(require("mongoose"));
-var ApiApp_1 = __importDefault(require("./ApiApp"));
-dotenv_1.default.config();
-(function () { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, mongoose_1.default.connect(process.env.MONGO_URI, {
-                    useNewUrlParser: true,
-                    useUnifiedTopology: true,
-                    useCreateIndex: true,
-                })];
-            case 1:
-                _a.sent();
-                ApiApp_1.default.start(process.env.PORT);
-                return [2 /*return*/];
-        }
-    });
-}); })();
-//# sourceMappingURL=server.js.map
+var express_1 = require("express");
+var ShortenerController_1 = __importDefault(require("../controllers/ShortenerController"));
+var ShortenerRoute = /** @class */ (function () {
+    function ShortenerRoute() {
+        this.router = (0, express_1.Router)();
+        this.setupRouter();
+    }
+    ShortenerRoute.prototype.setupRouter = function () {
+        var _this = this;
+        this.router.get('/:shortId', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, ShortenerController_1.default.redirectUrl(req, res)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        this.router.post('/', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, ShortenerController_1.default.shortenUrl(req, res)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+    };
+    ShortenerRoute.prototype.getRouter = function () {
+        return this.router;
+    };
+    return ShortenerRoute;
+}());
+exports.default = new ShortenerRoute();
+//# sourceMappingURL=ShortenUrl.js.map

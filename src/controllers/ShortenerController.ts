@@ -14,10 +14,11 @@ class ShortenerController {
 
     try {
       const record = await UrlModel.findOne({ shortId });
-      if (record) {
-        return res.redirect(record.url);
+      if (!record) {
+        return res.status(400).json({ message: 'shortId is invalid' })
       }
-      return res.status(400).json({ message: 'shortId is invalid' })
+      return res.redirect(record.url);
+
     } catch (error) {
       return res.status(500).json( {message: 'Something went wrong' })
     }
@@ -31,7 +32,7 @@ class ShortenerController {
       return res.status(400).json({ message: 'url is not provided' })
     }
 
-    if (!Validator.isURL(url, { require_protocol: true})) {
+    if (!Validator.isURL(url, { require_protocol: true} )) {
       return res.status(400).json({ message: 'url is invalid' })
     }
 
